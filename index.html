@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fake News vs. Reality: A Guide to Fact-Checking</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23ffffff'/%3E%3Ctext x='32' y='50' font-family='Arial,Helvetica,sans-serif' font-size='56' font-weight='bold' text-anchor='middle' fill='%23000000'%3E?%3C/text%3E%3C/svg%3E">
+<style>
+  :root {
+    --text: #1a1a1a;
+    --muted: #555;
+    --line: #cfcfcf;
+    --bg: #ffffff;
+    --soft: #f4f4f4;
+    --accent: #1f4e9c;
+    --good: #1d6b2f;
+    --bad: #a12626;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--text);
+    background: var(--bg);
+  }
+  h1, h2, h3, nav, button, .label {
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  a { color: var(--accent); }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 0 20px; }
+
+  /* header / nav */
+  header.top { border-bottom: 1px solid var(--line); background: var(--bg); }
+  nav { display: flex; flex-wrap: wrap; gap: 6px 18px; padding: 12px 0; font-size: 15px; }
+  nav a { text-decoration: none; color: var(--text); }
+  nav a:hover { text-decoration: underline; }
+  nav .brand { font-weight: bold; margin-right: auto; }
+
+  /* hero */
+  .hero { padding: 56px 0 40px; border-bottom: 1px solid var(--line); }
+  .hero .author { font-family: Arial, Helvetica, sans-serif; font-size: 16px; font-weight: bold; margin: -28px 0 24px; text-align: left; }
+  .hero .label { font-size: 14px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin: 0 0 12px; }
+  .hero h1 { font-size: 44px; line-height: 1.15; margin: 0 0 16px; }
+  .hero p.lead { font-size: 21px; color: var(--muted); margin: 0 0 24px; max-width: 640px; }
+  .btn {
+    display: inline-block; padding: 10px 18px; font-size: 16px; cursor: pointer;
+    border: 1px solid var(--text); background: var(--text); color: #fff; text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  .btn.secondary { background: var(--bg); color: var(--text); }
+  .btn:hover { opacity: .85; }
+  .btn:disabled { opacity: .4; cursor: default; }
+
+  section { padding: 44px 0; border-bottom: 1px solid var(--line); }
+  section h2 { font-size: 30px; margin: 0 0 8px; }
+  section .intro { color: var(--muted); margin: 0 0 24px; }
+  h3 { font-size: 20px; margin: 0 0 6px; }
+
+  /* basic blocks */
+  .box { border: 1px solid var(--line); padding: 16px 18px; background: var(--bg); }
+  .box.soft { background: var(--soft); }
+  .grid { display: grid; gap: 14px; }
+  .grid.two { grid-template-columns: repeat(2, 1fr); }
+  .grid.three { grid-template-columns: repeat(3, 1fr); }
+  @media (max-width: 700px) {
+    .grid.two, .grid.three { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 34px; }
+  }
+  .box p { margin: 0; font-size: 16px; }
+  .box .tag { font-family: Arial, Helvetica, sans-serif; font-size: 13px; color: var(--muted); margin-bottom: 4px; }
+
+  /* steps */
+  ol.steps { list-style: none; counter-reset: s; padding: 0; margin: 0; }
+  ol.steps li { counter-increment: s; border: 1px solid var(--line); padding: 14px 18px 14px 64px; margin-bottom: 12px; position: relative; }
+  ol.steps li::before {
+    content: counter(s); position: absolute; left: 18px; top: 12px;
+    width: 30px; height: 30px; border: 1px solid var(--text); text-align: center; line-height: 28px;
+    font-family: Arial, Helvetica, sans-serif; font-weight: bold;
+  }
+  ol.steps li p { margin: 0; font-size: 16px; }
+
+  /* table */
+  table { width: 100%; border-collapse: collapse; font-size: 16px; }
+  th, td { text-align: left; padding: 10px 12px; border: 1px solid var(--line); vertical-align: top; }
+  th { background: var(--soft); font-family: Arial, Helvetica, sans-serif; font-size: 14px; }
+  .table-scroll { overflow-x: auto; }
+
+  /* red flags */
+  ul.flags { margin: 0; padding-left: 20px; }
+  ul.flags li { margin-bottom: 8px; }
+
+  /* quiz */
+  #quiz-box { border: 1px solid var(--text); padding: 20px; }
+  .q-meta { font-family: Arial, Helvetica, sans-serif; font-size: 14px; color: var(--muted); margin-bottom: 8px; }
+  .q-text { font-size: 20px; margin: 0 0 16px; }
+  .headline { border-left: 4px solid var(--line); padding: 8px 14px; background: var(--soft); margin-bottom: 16px; font-size: 18px; }
+  .options { display: flex; gap: 10px; flex-wrap: wrap; }
+  .feedback { margin-top: 16px; padding: 12px 14px; border: 1px solid var(--line); font-size: 16px; display: none; }
+  .feedback.ok { border-color: var(--good); }
+  .feedback.no { border-color: var(--bad); }
+  .feedback strong.ok { color: var(--good); }
+  .feedback strong.no { color: var(--bad); }
+  .progress { height: 8px; background: var(--soft); border: 1px solid var(--line); margin-bottom: 16px; }
+  .progress div { height: 100%; width: 0; background: var(--text); }
+  .score { font-size: 28px; font-family: Arial, Helvetica, sans-serif; margin: 0 0 8px; }
+
+  /* checklist */
+  .check { display: block; padding: 10px 0; border-bottom: 1px solid var(--line); cursor: pointer; font-size: 17px; }
+  .check input { margin-right: 10px; transform: scale(1.2); }
+  #check-result { margin-top: 14px; font-family: Arial, Helvetica, sans-serif; font-size: 16px; }
+
+  /* sources */
+  ul.sources { padding-left: 20px; font-size: 16px; }
+  ul.sources li { margin-bottom: 8px; }
+
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <nav>
+      <a class="brand" href="#top">Fact-Check Guide</a>
+      <a href="#problem">The problem</a>
+      <a href="#types">Types</a>
+      <a href="#steps">5 steps</a>
+      <a href="#tools">Tools</a>
+      <a href="#quiz">Quiz</a>
+      <a href="#checklist">Checklist</a>
+      <a href="#about">About</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <div class="hero">
+    <div class="wrap">
+      <p class="author">Черник Леонид</p>
+      <p class="label">Student social project</p>
+      <h1>Fake news vs. reality: a guide to fact-checking</h1>
+      <p class="lead">Every day we see hundreds of headlines, posts and videos. Some are true, some are wrong, and some are made to fool us. This guide shows how to tell the difference in five minutes or less.</p>
+      <a class="btn" href="#steps">Learn the 5 steps</a>
+      <a class="btn secondary" href="#quiz">Take the quiz</a>
+    </div>
+  </div>
+
+  <section id="problem">
+    <div class="wrap">
+      <h2>Why does it matter?</h2>
+      <p class="intro">False information is not just a harmless mistake on the internet.</p>
+      <div class="grid three">
+        <div class="box">
+          <h3>It spreads fast</h3>
+          <p>A shocking post gets shared before anyone checks it. Social networks reward posts that make people react, not posts that are accurate.</p>
+        </div>
+        <div class="box">
+          <h3>It affects decisions</h3>
+          <p>People use news to decide what to buy, whom to trust, how to treat their health and how to vote. Wrong information leads to wrong choices.</p>
+        </div>
+        <div class="box">
+          <h3>Anyone can be fooled</h3>
+          <p>Being smart is not enough. Fake news is designed to look convincing and to match what we already believe or fear.</p>
+        </div>
+      </div>
+
+      <h3 style="margin-top:28px">Three words that are often mixed up</h3>
+      <div class="table-scroll">
+        <table>
+          <tr><th>Term</th><th>Meaning</th><th>Example</th></tr>
+          <tr><td><strong>Misinformation</strong></td><td>False information shared by someone who believes it is true.</td><td>A student reposts an old photo of a flood, thinking it shows today's event.</td></tr>
+          <tr><td><strong>Disinformation</strong></td><td>False information created and shared on purpose to mislead or to make money.</td><td>A website invents a story about a "miracle cure" to sell a product.</td></tr>
+          <tr><td><strong>Malinformation</strong></td><td>Real information used to harm someone, for example private details made public.</td><td>Someone leaks a private message to humiliate a person.</td></tr>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section id="types">
+    <div class="wrap">
+      <h2>7 types of misleading content</h2>
+      <p class="intro">Researcher Claire Wardle describes seven forms of information disorder. Not all of them are completely "fake": often a true detail is placed in a false frame.</p>
+      <div class="grid two">
+        <div class="box"><div class="tag">1</div><h3>Satire or parody</h3><p>A joke with no intention to harm, but readers may take it seriously if they miss the joke.</p></div>
+        <div class="box"><div class="tag">2</div><h3>Misleading content</h3><p>A real fact or quote is used to frame an issue in a distorted way.</p></div>
+        <div class="box"><div class="tag">3</div><h3>Imposter content</h3><p>A fake source pretends to be a real person, newspaper or organization.</p></div>
+        <div class="box"><div class="tag">4</div><h3>Fabricated content</h3><p>Completely false: invented text, a made-up story, a fake document.</p></div>
+        <div class="box"><div class="tag">5</div><h3>False connection</h3><p>The headline or picture does not match what the article actually says (clickbait).</p></div>
+        <div class="box"><div class="tag">6</div><h3>False context</h3><p>A real photo, video or quote is shared with wrong information about when, where or why it happened.</p></div>
+        <div class="box"><div class="tag">7</div><h3>Manipulated content</h3><p>A real image, video or audio recording is edited or generated to deceive.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="steps">
+    <div class="wrap">
+      <h2>The 5-step fact-check</h2>
+      <p class="intro">Use these steps whenever a story looks surprising, emotional or too perfect. They are based on well-known media literacy methods such as SIFT and the CRAAP test.</p>
+      <ol class="steps">
+        <li>
+          <h3>Stop and notice your reaction</h3>
+          <p>Are you angry, scared or thrilled? Strong emotion is a warning sign. Do not share or comment yet. Ask yourself: "Do I know this source, and is this claim really proven?"</p>
+        </li>
+        <li>
+          <h3>Check the source</h3>
+          <p>Who published it? Open the "About" page, look for a real author, contact details and a history of other articles. Check the web address carefully: fake sites often copy real names with small changes.</p>
+        </li>
+        <li>
+          <h3>Read beyond the headline</h3>
+          <p>Headlines are written to attract clicks. Read the full text: does it give evidence, named experts, documents or data? Or does it only say "they say" and "insiders claim"?</p>
+        </li>
+        <li>
+          <h3>Find other reports</h3>
+          <p>Search for the main claim on your own. If it is real and important, several independent and reliable outlets will report it. If only one unknown website has it, be careful.</p>
+        </li>
+        <li>
+          <h3>Check the date, photo and video</h3>
+          <p>Old stories get reposted as new. Look at the publication date. Use reverse image search to find where a picture appeared first. Watch for signs of editing or AI generation.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="flags">
+    <div class="wrap">
+      <h2>Red flags</h2>
+      <p class="intro">One red flag does not prove a story is fake, but several together mean you should check carefully.</p>
+      <div class="box soft">
+        <ul class="flags">
+          <li>A shocking or very emotional headline in CAPITAL LETTERS or with many exclamation marks!!!</li>
+          <li>No author, no date, no links to sources.</li>
+          <li>"Share before they delete it!" or other pressure to act quickly.</li>
+          <li>Spelling mistakes and strange design on a site that claims to be a big news outlet.</li>
+          <li>The story only confirms what you already want to believe.</li>
+          <li>A screenshot instead of a link: it is easy to fake and hard to verify.</li>
+          <li>No other reliable media report the same "sensational" fact.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="tools">
+    <div class="wrap">
+      <h2>Free tools for fact-checkers</h2>
+      <p class="intro">You do not need special skills. These websites do most of the work.</p>
+      <div class="table-scroll">
+        <table>
+          <tr><th>Tool</th><th>What it does</th><th>Link</th></tr>
+          <tr><td>Google Fact Check Explorer</td><td>Searches claims already checked by fact-checking organizations around the world.</td><td><a href="https://toolbox.google.com/factcheck/explorer" target="_blank" rel="noopener">toolbox.google.com/factcheck</a></td></tr>
+          <tr><td>Snopes</td><td>One of the oldest fact-checking sites, covering viral claims, rumors and hoaxes.</td><td><a href="https://www.snopes.com" target="_blank" rel="noopener">snopes.com</a></td></tr>
+          <tr><td>FactCheck.org</td><td>A non-profit project that checks claims made in politics.</td><td><a href="https://www.factcheck.org" target="_blank" rel="noopener">factcheck.org</a></td></tr>
+          <tr><td>Reuters Fact Check</td><td>Verifies viral posts, images and videos.</td><td><a href="https://www.reuters.com/fact-check/" target="_blank" rel="noopener">reuters.com/fact-check</a></td></tr>
+          <tr><td>TinEye</td><td>Reverse image search: shows where else a picture appeared online.</td><td><a href="https://tineye.com" target="_blank" rel="noopener">tineye.com</a></td></tr>
+          <tr><td>Google Images</td><td>Upload a photo or paste its address to find its earlier versions.</td><td><a href="https://images.google.com" target="_blank" rel="noopener">images.google.com</a></td></tr>
+          <tr><td>Wayback Machine</td><td>Shows old saved versions of web pages, so you can see if a text was changed or deleted.</td><td><a href="https://web.archive.org" target="_blank" rel="noopener">web.archive.org</a></td></tr>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section id="example">
+    <div class="wrap">
+      <h2>Example: checking a viral post</h2>
+      <p class="intro">An imaginary case to show the 5 steps in action.</p>
+      <div class="box soft">
+        <p><strong>Post:</strong> "SHOCKING! Scientists confirm that students who sleep only 3 hours get better grades! Share before it's removed!"</p>
+      </div>
+      <div class="grid two" style="margin-top:14px">
+        <div class="box"><div class="tag">Step 1 – Stop</div><p>The post uses capital letters and pressure ("before it's removed"). Red flags already.</p></div>
+        <div class="box"><div class="tag">Step 2 – Source</div><p>No link, no name of the "scientists", no author of the post.</p></div>
+        <div class="box"><div class="tag">Step 3 – Read</div><p>There is no article behind the headline, only a claim.</p></div>
+        <div class="box"><div class="tag">Step 4 – Other reports</div><p>Searching finds no study. Health organizations say the opposite: students need regular, sufficient sleep to learn well.</p></div>
+      </div>
+      <p style="margin-top:14px"><strong>Verdict:</strong> not supported by evidence. Do not share.</p>
+    </div>
+  </section>
+
+  <section id="quiz">
+    <div class="wrap">
+      <h2>Quiz: fake or real?</h2>
+      <p class="intro">Eight imaginary examples. Decide whether you would trust the claim or check it first.</p>
+      <div id="quiz-box"></div>
+    </div>
+  </section>
+
+  <section id="checklist">
+    <div class="wrap">
+      <h2>My fact-check checklist</h2>
+      <p class="intro">Tick what you did before sharing a story. Aim for all six.</p>
+      <div class="box">
+        <label class="check"><input type="checkbox"> I paused and noticed how the story made me feel.</label>
+        <label class="check"><input type="checkbox"> I know who published it and checked the website address.</label>
+        <label class="check"><input type="checkbox"> I read the whole article, not only the headline.</label>
+        <label class="check"><input type="checkbox"> I found the same news in at least two reliable sources.</label>
+        <label class="check"><input type="checkbox"> I checked the date and, if there was a photo or video, its origin.</label>
+        <label class="check"><input type="checkbox"> I searched the claim on a fact-checking website.</label>
+        <div id="check-result">0 of 6 steps done.</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="wrap">
+      <h2>About this project</h2>
+      <div class="grid two">
+        <div class="box">
+          <h3>Project type</h3>
+          <p>Social project. Its aim is to change a problem situation for the better: students learn to recognize false information and stop it from spreading.</p>
+        </div>
+        <div class="box">
+          <h3>Product</h3>
+          <p>An educational website with a guide, a self-test and a checklist that anyone can use for free.</p>
+        </div>
+        <div class="box">
+          <h3>Target audience</h3>
+          <p>University and school students who get most of their news from social networks and messengers.</p>
+        </div>
+        <div class="box">
+          <h3>Conclusion</h3>
+          <p>We cannot avoid fake news completely, but we can slow it down. Before you share: stop, check the source, read, compare and verify the picture.</p>
+        </div>
+      </div>
+
+      <h3 style="margin-top:28px">Sources</h3>
+      <ul class="sources">
+        <li>Wardle, C. and Derakhshan, H. <em>Information Disorder: Toward an Interdisciplinary Framework for Research and Policy Making</em>. Council of Europe, 2017.</li>
+        <li>Wardle, C. <em>Fake News. It's Complicated</em>. First Draft, 2017.</li>
+        <li>Caulfield, M. <em>Web Literacy for Student Fact-Checkers</em> (the SIFT method).</li>
+        <li>IFLA. <em>How to Spot Fake News</em> (infographic).</li>
+        <li>Meriam Library, California State University, Chico. The CRAAP test.</li>
+        <li>Websites listed in the "Free tools" section.</li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<script>
+(function () {
+  /* ---------- Quiz ---------- */
+  var questions = [
+    {
+      headline: "“BREAKING!!! Doctors HATE this one trick: drink this tea and lose 10 kg in 3 days!”",
+      answer: "fake",
+      why: "Capital letters, an impossible promise and no named source or study. This is a typical clickbait ad."
+    },
+    {
+      headline: "A city council publishes the date of next month’s public meeting on its official website, with a link to the full agenda.",
+      answer: "real",
+      why: "It comes from the official primary source, gives specific details and can be verified on the council’s own page."
+    },
+    {
+      headline: "A photo of a flooded street goes viral with the caption “This is happening right now in our city!” Reverse image search shows the same photo was published four years ago in another country.",
+      answer: "fake",
+      why: "This is false context: a real photo with wrong information about time and place. Reverse image search exposed it."
+    },
+    {
+      headline: "A university announces new library opening hours in an email to students and on its official website.",
+      answer: "real",
+      why: "Two official channels confirm the same message, and the information is simple and checkable."
+    },
+    {
+      headline: "A website called “bbc-news-today.example” reports that a famous actor has died. No other outlet mentions it.",
+      answer: "fake",
+      why: "The name imitates a real news brand (imposter content) and no reliable outlet confirms such a major story."
+    },
+    {
+      headline: "A satirical news site publishes: “Local student discovers that homework does itself if you stare at it long enough.”",
+      answer: "fake",
+      why: "It is satire, a joke. It is not meant to be true, but it becomes misinformation if someone shares it as real news."
+    },
+    {
+      headline: "A national weather service warns of heavy snow tomorrow. Several news outlets repeat the warning and cite the same service.",
+      answer: "real",
+      why: "The original source is an official agency, and independent outlets confirm it by citing that source."
+    },
+    {
+      headline: "A screenshot of a “message from a minister” announces that all exams are cancelled. There is no link and no date.",
+      answer: "fake",
+      why: "A screenshot with no link, date or confirmation is easy to fake. Always look for the original statement."
+    }
+  ];
+
+  var box = document.getElementById("quiz-box");
+  var index = 0, score = 0, answered = false;
+
+  function render() {
+    if (index >= questions.length) { return renderEnd(); }
+    var q = questions[index];
+    answered = false;
+    box.innerHTML =
+      '<div class="q-meta">Question ' + (index + 1) + ' of ' + questions.length + '</div>' +
+      '<div class="progress"><div style="width:' + (index / questions.length * 100) + '%"></div></div>' +
+      '<p class="q-text">Would you trust this?</p>' +
+      '<div class="headline">' + q.headline + '</div>' +
+      '<div class="options">' +
+        '<button class="btn secondary" data-a="real">Looks real</button>' +
+        '<button class="btn secondary" data-a="fake">Looks fake or misleading</button>' +
+      '</div>' +
+      '<div class="feedback" id="fb"></div>' +
+      '<div style="margin-top:16px"><button class="btn" id="next" style="display:none">' +
+        (index === questions.length - 1 ? 'See result' : 'Next question') + '</button></div>';
+
+    var btns = box.querySelectorAll("[data-a]");
+    for (var i = 0; i < btns.length; i++) {
+      btns[i].addEventListener("click", onAnswer);
+    }
+    document.getElementById("next").addEventListener("click", function () { index++; render(); });
+  }
+
+  function onAnswer(e) {
+    if (answered) return;
+    answered = true;
+    var q = questions[index];
+    var choice = e.currentTarget.getAttribute("data-a");
+    var ok = choice === q.answer;
+    if (ok) score++;
+    var fb = document.getElementById("fb");
+    fb.className = "feedback " + (ok ? "ok" : "no");
+    fb.style.display = "block";
+    fb.innerHTML = '<strong class="' + (ok ? "ok" : "no") + '">' + (ok ? "Correct." : "Not quite.") + '</strong> ' +
+      'Answer: ' + (q.answer === "real" ? "reliable." : "fake or misleading.") + ' ' + q.why;
+    var all = box.querySelectorAll("[data-a]");
+    for (var i = 0; i < all.length; i++) { all[i].disabled = true; }
+    document.getElementById("next").style.display = "inline-block";
+  }
+
+  function renderEnd() {
+    var msg;
+    if (score >= 7) msg = "Excellent. You already think like a fact-checker.";
+    else if (score >= 5) msg = "Good result. Review the red flags and the 5 steps to improve it.";
+    else msg = "Do not worry. Read the 5 steps again and try once more.";
+    box.innerHTML =
+      '<div class="progress"><div style="width:100%"></div></div>' +
+      '<p class="score">' + score + ' / ' + questions.length + '</p>' +
+      '<p>' + msg + '</p>' +
+      '<button class="btn" id="again">Try again</button>';
+    document.getElementById("again").addEventListener("click", function () {
+      index = 0; score = 0; render();
+    });
+  }
+
+  render();
+
+  /* ---------- Checklist ---------- */
+  var checks = document.querySelectorAll("#checklist input[type=checkbox]");
+  var result = document.getElementById("check-result");
+  function updateChecks() {
+    var n = 0;
+    for (var i = 0; i < checks.length; i++) { if (checks[i].checked) n++; }
+    result.textContent = n + " of " + checks.length + " steps done." +
+      (n === checks.length ? " Great, now it is safe to share." : "");
+  }
+  for (var i = 0; i < checks.length; i++) { checks[i].addEventListener("change", updateChecks); }
+})();
+</script>
+</body>
+</html>
