@@ -116,6 +116,11 @@
   ul.sources { padding-left: 20px; font-size: 16px; }
   ul.sources li { margin-bottom: 8px; }
 
+
+  /* language toggle */
+  .lang-btn { padding: 4px 12px; font-size: 14px; }
+  .ru-add { color: var(--muted); font-style: italic; font-weight: normal; font-size: .95em; }
+  .btn .ru-add { color: inherit; }
 </style>
 </head>
 <body>
@@ -132,6 +137,7 @@
       <a href="#quiz">Quiz</a>
       <a href="#checklist">Checklist</a>
       <a href="#about">About</a>
+      <button type="button" class="btn secondary lang-btn" id="lang-btn" aria-label="Language switch">EN</button>
     </nav>
   </div>
 </header>
@@ -203,32 +209,38 @@
         <div class="box">
           <div class="tag">2016 · USA · Conspiracy theory</div>
           <h3>“Pizzagate”</h3>
-          <p><strong>The fake:</strong> a story spread on social media claiming that a Washington pizzeria hid a criminal ring.<br><strong>Consequence:</strong> a man who believed it came to the restaurant with a rifle and fired shots inside. Nobody was hurt, but he was sent to prison, and the business received threats for a long time.</p>
+          <p><strong>The fake:</strong> a story spread on social media claiming that a Washington pizzeria hid a criminal ring.</p>
+          <p style="margin-top:8px"><strong>Consequence:</strong> a man who believed it came to the restaurant with a rifle and fired shots inside. Nobody was hurt, but he was sent to prison, and the business received threats for a long time.</p>
         </div>
         <div class="box">
           <div class="tag">2018 · India · Messenger rumors</div>
           <h3>Child-kidnapper rumors in WhatsApp</h3>
-          <p><strong>The fake:</strong> forwarded messages and videos warned about “child kidnappers” in villages.<br><strong>Consequence:</strong> angry crowds attacked strangers, and according to media reports about two dozen innocent people were killed. WhatsApp then limited message forwarding.</p>
+          <p><strong>The fake:</strong> forwarded messages and videos warned about “child kidnappers” in villages.</p>
+          <p style="margin-top:8px"><strong>Consequence:</strong> angry crowds attacked strangers, and according to media reports about two dozen innocent people were killed. WhatsApp then limited message forwarding.</p>
         </div>
         <div class="box">
           <div class="tag">2013 · USA · Hacked account</div>
           <h3>Fake tweet about the White House</h3>
-          <p><strong>The fake:</strong> hackers posted from the Associated Press account that there were explosions at the White House and the president was injured.<br><strong>Consequence:</strong> within minutes the US stock market fell sharply, by roughly 150 points on the Dow index, and recovered after the news was denied.</p>
+          <p><strong>The fake:</strong> hackers posted from the Associated Press account that there were explosions at the White House and the president was injured.</p>
+          <p style="margin-top:8px"><strong>Consequence:</strong> within minutes the US stock market fell sharply, by roughly 150 points on the Dow index, and recovered after the news was denied.</p>
         </div>
         <div class="box">
           <div class="tag">2020 · Iran · Health rumor</div>
           <h3>“Alcohol cures coronavirus”</h3>
-          <p><strong>The fake:</strong> a rumor that strong alcohol protects against or cures COVID-19.<br><strong>Consequence:</strong> people drank cheap illegal alcohol containing methanol. Hundreds died and thousands were poisoned.</p>
+          <p><strong>The fake:</strong> a rumor that strong alcohol protects against or cures COVID-19.</p>
+          <p style="margin-top:8px"><strong>Consequence:</strong> people drank cheap illegal alcohol containing methanol. Hundreds died and thousands were poisoned.</p>
         </div>
         <div class="box">
           <div class="tag">2020 · UK and Europe · Conspiracy theory</div>
           <h3>5G towers and the virus</h3>
-          <p><strong>The fake:</strong> a claim that 5G networks spread or cause COVID-19.<br><strong>Consequence:</strong> dozens of mobile phone masts were set on fire, and telecom engineers were threatened and attacked.</p>
+          <p><strong>The fake:</strong> a claim that 5G networks spread or cause COVID-19.</p>
+          <p style="margin-top:8px"><strong>Consequence:</strong> dozens of mobile phone masts were set on fire, and telecom engineers were threatened and attacked.</p>
         </div>
         <div class="box">
           <div class="tag">1998–2010 · Medicine · Fraudulent study</div>
           <h3>Vaccines and autism</h3>
-          <p><strong>The fake:</strong> a published study claimed a link between the MMR vaccine and autism. It was later found to be fraudulent, and the journal retracted it in 2010.<br><strong>Consequence:</strong> many parents refused vaccination, and measles outbreaks returned in several countries.</p>
+          <p><strong>The fake:</strong> a published study claimed a link between the MMR vaccine and autism. It was later found to be fraudulent, and the journal retracted it in 2010.</p>
+          <p style="margin-top:8px"><strong>Consequence:</strong> many parents refused vaccination, and measles outbreaks returned in several countries.</p>
         </div>
       </div>
       <div class="box soft" style="margin-top:14px">
@@ -382,89 +394,287 @@
 
 <script>
 (function () {
+  /* ---------- Language: English / English + Russian ---------- */
+  var RU = [
+    ["Fact-Check Guide","Руководство по проверке фактов"],["The problem","Проблема"],["Types","Типы"],["Real cases","Реальные случаи"],
+    ["5 steps","5 шагов"],["Tools","Инструменты"],["Quiz","Викторина"],["Checklist","Чек-лист"],["About","О проекте"],
+    ["Student social project","Студенческий социальный проект"],
+    ["Fake news vs. reality: a guide to fact-checking","Фейковые новости и реальность: руководство по проверке фактов"],
+    ["Every day we see hundreds of headlines","Каждый день мы видим сотни заголовков, постов и видео. Одни правдивы, другие ошибочны, а третьи созданы, чтобы нас обмануть. Это руководство показывает, как отличить одно от другого за пять минут или быстрее."],
+    ["Learn the 5 steps","Изучить 5 шагов"],["Take the quiz","Пройти викторину"],
+    ["Why does it matter?","Почему это важно?"],
+    ["False information is not just a harmless mistake","Ложная информация — это не просто безобидная ошибка в интернете."],
+    ["It spreads fast","Она распространяется быстро"],
+    ["A shocking post gets shared","Шокирующий пост пересылают раньше, чем кто-либо его проверит. Соцсети поощряют посты, вызывающие реакцию, а не точные."],
+    ["It affects decisions","Она влияет на решения"],
+    ["People use news to decide","Люди используют новости, чтобы решать, что купить, кому доверять, как лечиться и за кого голосовать. Неверная информация ведёт к неверному выбору."],
+    ["Anyone can be fooled","Обмануть можно любого"],
+    ["Being smart is not enough","Ума недостаточно. Фейки создают так, чтобы они выглядели убедительно и совпадали с тем, во что мы уже верим или чего боимся."],
+    ["Three words that are often mixed up","Три слова, которые часто путают"],
+    ["Term","Термин"],["Meaning","Значение"],["Example","Пример"],
+    ["Misinformation","Мисинформация"],["Disinformation","Дезинформация"],["Malinformation","Малинформация"],
+    ["False information shared by someone who believes it is true.","Ложная информация, которую распространяет человек, считающий её правдой."],
+    ["False information created and shared on purpose","Ложная информация, созданная и распространяемая намеренно, чтобы ввести в заблуждение или заработать."],
+    ["Real information used to harm someone","Настоящая информация, используемая, чтобы навредить человеку, например, личные данные, ставшие публичными."],
+    ["A student reposts an old photo","Студент репостит старое фото наводнения, думая, что оно показывает сегодняшнее событие."],
+    ["A website invents a story","Сайт придумывает историю о «чудодейственном лекарстве», чтобы продать товар."],
+    ["Someone leaks a private message","Кто-то публикует личное сообщение, чтобы унизить человека."],
+    ["7 types of misleading content","7 типов вводящего в заблуждение контента"],
+    ["Researcher Claire Wardle describes","Исследователь Клэр Уордл описывает семь форм информационного беспорядка. Не все они полностью «фейковые»: часто правдивая деталь помещена в ложную рамку."],
+    ["Satire or parody","Сатира или пародия"],
+    ["A joke with no intention to harm","Шутка без умысла навредить, но читатели могут принять её всерьёз, если не поймут шутку."],
+    ["Misleading content","Вводящий в заблуждение контент"],
+    ["A real fact or quote is used","Реальный факт или цитата используются, чтобы исказить подачу темы."],
+    ["Imposter content","Контент-самозванец"],
+    ["A fake source pretends","Поддельный источник выдаёт себя за реального человека, газету или организацию."],
+    ["Fabricated content","Сфабрикованный контент"],
+    ["Completely false: invented text","Полностью ложный: выдуманный текст, придуманная история, поддельный документ."],
+    ["False connection","Ложная связь"],
+    ["The headline or picture does not match","Заголовок или картинка не соответствуют тому, что на самом деле написано в статье (кликбейт)."],
+    ["False context","Ложный контекст"],
+    ["A real photo, video or quote is shared","Реальное фото, видео или цитата выдаются с неверными сведениями о том, когда, где или почему это произошло."],
+    ["Manipulated content","Манипулированный контент"],
+    ["A real image, video or audio recording","Реальное изображение, видео или аудио отредактировано или сгенерировано, чтобы обмануть."],
+    ["Real cases and their consequences","Реальные случаи и их последствия"],
+    ["Fake news is not only an online problem","Фейки — это не только проблема интернета. Вот известные случаи, когда ложная информация причинила реальный вред."],
+    ["2016 · USA · Conspiracy theory","2016 · США · Теория заговора"],
+    ["“Pizzagate”","«Pizzagate»"],
+    ["The fake: a story spread on social media","Фейк: в соцсетях распространилась история о том, что вашингтонская пиццерия скрывает преступную группировку."],
+    ["Consequence: a man who believed it","Последствия: поверивший в это мужчина пришёл в ресторан с винтовкой и выстрелил внутри. Никто не пострадал, но он отправился в тюрьму, а бизнесу ещё долго угрожали."],
+    ["2018 · India · Messenger rumors","2018 · Индия · Слухи в мессенджере"],
+    ["Child-kidnapper rumors in WhatsApp","Слухи о похитителях детей в WhatsApp"],
+    ["The fake: forwarded messages","Фейк: пересылаемые сообщения и видео предупреждали о «похитителях детей» в деревнях."],
+    ["Consequence: angry crowds","Последствия: разъярённые толпы нападали на незнакомцев, и, по сообщениям СМИ, около двух десятков невиновных погибли. После этого WhatsApp ограничил пересылку сообщений."],
+    ["2013 · USA · Hacked account","2013 · США · Взломанный аккаунт"],
+    ["Fake tweet about the White House","Фейковый твит о Белом доме"],
+    ["The fake: hackers posted","Фейк: хакеры написали от имени Associated Press, что в Белом доме прогремели взрывы и президент ранен."],
+    ["Consequence: within minutes","Последствия: за несколько минут фондовый рынок США резко упал, примерно на 150 пунктов индекса Доу-Джонса, и восстановился после опровержения."],
+    ["2020 · Iran · Health rumor","2020 · Иран · Слух о здоровье"],
+    ["“Alcohol cures coronavirus”","«Алкоголь лечит коронавирус»"],
+    ["The fake: a rumor that strong alcohol","Фейк: слух, что крепкий алкоголь защищает от COVID-19 или лечит его."],
+    ["Consequence: people drank cheap","Последствия: люди пили дешёвый нелегальный алкоголь с метанолом. Сотни людей умерли, тысячи отравились."],
+    ["2020 · UK and Europe · Conspiracy theory","2020 · Великобритания и Европа · Теория заговора"],
+    ["5G towers and the virus","Вышки 5G и вирус"],
+    ["The fake: a claim that 5G","Фейк: утверждение, что сети 5G распространяют или вызывают COVID-19."],
+    ["Consequence: dozens of mobile","Последствия: были подожжены десятки вышек мобильной связи, инженерам угрожали и на них нападали."],
+    ["1998–2010 · Medicine · Fraudulent study","1998–2010 · Медицина · Сфальсифицированное исследование"],
+    ["Vaccines and autism","Вакцины и аутизм"],
+    ["The fake: a published study","Фейк: опубликованное исследование утверждало, что вакцина КПК связана с аутизмом. Позже выяснилось, что оно сфальсифицировано, и журнал отозвал его в 2010 году."],
+    ["Consequence: many parents","Последствия: многие родители отказались от вакцинации, и в нескольких странах вернулись вспышки кори."],
+    ["What these cases have in common","Общее у этих случаев: история была эмоциональной, быстро распространялась, и ею делились люди, желавшие помочь или предупредить других. Проверка заняла бы несколько минут."],
+    ["The 5-step fact-check","Проверка фактов за 5 шагов"],
+    ["Use these steps whenever a story","Используйте эти шаги, когда история кажется удивительной, эмоциональной или слишком идеальной. Они основаны на известных методах медиаграмотности, таких как SIFT и тест CRAAP."],
+    ["Stop and notice your reaction","Остановитесь и заметьте свою реакцию"],
+    ["Are you angry, scared or thrilled?","Вы злитесь, боитесь или в восторге? Сильная эмоция — сигнал тревоги. Пока не делитесь и не комментируйте. Спросите себя: «Знаю ли я этот источник и действительно ли это доказано?»"],
+    ["Check the source","Проверьте источник"],
+    ["Who published it? Open the","Кто это опубликовал? Откройте страницу «О нас», найдите настоящего автора, контакты и историю других статей. Внимательно проверьте адрес сайта: фейковые сайты копируют настоящие названия с небольшими изменениями."],
+    ["Read beyond the headline","Читайте не только заголовок"],
+    ["Headlines are written to attract clicks","Заголовки пишут, чтобы привлечь клики. Прочитайте весь текст: есть ли доказательства, названные эксперты, документы или данные? Или только «говорят» и «инсайдеры утверждают»?"],
+    ["Find other reports","Найдите другие сообщения"],
+    ["Search for the main claim on your own","Найдите главное утверждение самостоятельно. Если оно настоящее и важное, о нём сообщат несколько независимых надёжных изданий. Если только один неизвестный сайт — будьте осторожны."],
+    ["Check the date, photo and video","Проверьте дату, фото и видео"],
+    ["Old stories get reposted as new","Старые истории выдают за новые. Посмотрите дату публикации. Используйте поиск по картинке, чтобы найти, где фото появилось впервые. Ищите признаки монтажа или генерации ИИ."],
+    ["Red flags","Красные флаги"],
+    ["One red flag does not prove","Один красный флаг не доказывает, что история фейковая, но несколько вместе означают, что нужно проверять внимательно."],
+    ["A shocking or very emotional headline","Шокирующий или очень эмоциональный заголовок ЗАГЛАВНЫМИ БУКВАМИ или с множеством восклицательных знаков!!!"],
+    ["No author, no date, no links to sources","Нет автора, даты и ссылок на источники."],
+    ["\"Share before they delete it!\"","«Поделись, пока не удалили!» или другое давление, чтобы действовать быстро."],
+    ["Spelling mistakes and strange design","Орфографические ошибки и странный дизайн на сайте, который выдаёт себя за крупное издание."],
+    ["The story only confirms","История только подтверждает то, во что вам и так хочется верить."],
+    ["A screenshot instead of a link","Скриншот вместо ссылки: его легко подделать и трудно проверить."],
+    ["No other reliable media report","Ни одно другое надёжное издание не сообщает о том же «сенсационном» факте."],
+    ["Free tools for fact-checkers","Бесплатные инструменты для проверки фактов"],
+    ["You do not need special skills","Специальные навыки не нужны. Эти сайты делают большую часть работы."],
+    ["Tool","Инструмент"],["What it does","Что делает"],["Link","Ссылка"],
+    ["Searches claims already checked","Ищет утверждения, уже проверенные организациями по проверке фактов по всему миру."],
+    ["One of the oldest fact-checking sites","Один из старейших сайтов по проверке фактов: вирусные утверждения, слухи и мистификации."],
+    ["A non-profit project that checks claims","Некоммерческий проект, проверяющий заявления в политике."],
+    ["Verifies viral posts, images and videos","Проверяет вирусные посты, изображения и видео."],
+    ["Reverse image search: shows where","Обратный поиск по картинке: показывает, где ещё в сети появлялось изображение."],
+    ["Upload a photo or paste its address","Загрузите фото или вставьте его адрес, чтобы найти более ранние версии."],
+    ["Shows old saved versions of web pages","Показывает старые сохранённые версии веб-страниц, чтобы увидеть, менялся ли или удалялся ли текст."],
+    ["Example: checking a viral post","Пример: проверка вирусного поста"],
+    ["An imaginary case to show","Воображаемый случай, показывающий 5 шагов в действии."],
+    ["Post: \"SHOCKING! Scientists confirm","Пост: «ШОКИРУЮЩЕ! Учёные подтвердили: студенты, спящие всего 3 часа, получают лучшие оценки! Поделись, пока не удалили!»"],
+    ["Step 1 – Stop","Шаг 1 – Стоп"],["Step 2 – Source","Шаг 2 – Источник"],["Step 3 – Read","Шаг 3 – Чтение"],["Step 4 – Other reports","Шаг 4 – Другие сообщения"],
+    ["The post uses capital letters","Пост использует заглавные буквы и давление («пока не удалили»). Красные флаги уже есть."],
+    ["No link, no name of the","Нет ссылки, нет имён «учёных», нет автора поста."],
+    ["There is no article behind","За заголовком нет статьи, только утверждение."],
+    ["Searching finds no study","Поиск не находит исследования. Организации здравоохранения говорят обратное: студентам нужен регулярный достаточный сон, чтобы хорошо учиться."],
+    ["Verdict: not supported","Вердикт: не подтверждено доказательствами. Не делитесь."],
+    ["Quiz: fake or real?","Викторина: фейк или правда?"],
+    ["Eight imaginary examples","Восемь воображаемых примеров. Решите, поверили бы вы утверждению или сначала проверили бы."],
+    ["My fact-check checklist","Мой чек-лист проверки фактов"],
+    ["Tick what you did before sharing","Отметьте, что вы сделали перед тем, как поделиться историей. Стремитесь отметить все шесть."],
+    ["I paused and noticed","Я остановился и заметил, какие чувства вызвала история."],
+    ["I know who published it","Я знаю, кто это опубликовал, и проверил адрес сайта."],
+    ["I read the whole article","Я прочитал всю статью, а не только заголовок."],
+    ["I found the same news in at least two","Я нашёл эту новость как минимум в двух надёжных источниках."],
+    ["I checked the date and","Я проверил дату и, если было фото или видео, его происхождение."],
+    ["I searched the claim on a fact-checking","Я поискал это утверждение на сайте по проверке фактов."],
+    ["About this project","О проекте"],
+    ["Project type","Тип проекта"],
+    ["Social project. Its aim","Социальный проект. Его цель — изменить проблемную ситуацию к лучшему: студенты учатся распознавать ложную информацию и не дают ей распространяться."],
+    ["Product","Продукт"],
+    ["An educational website with","Образовательный сайт с руководством, тестом для самопроверки и чек-листом, которыми каждый может пользоваться бесплатно."],
+    ["Target audience","Целевая аудитория"],
+    ["University and school students who","Студенты вузов и школьники, которые получают большую часть новостей из социальных сетей и мессенджеров."],
+    ["Conclusion","Вывод"],
+    ["We cannot avoid fake news completely","Мы не можем полностью избежать фейков, но можем замедлить их. Прежде чем поделиться: остановитесь, проверьте источник, прочитайте, сравните и проверьте картинку."],
+    ["Sources","Источники"]
+  ];
+
+  var langOn = false;
+  try { langOn = localStorage.getItem("lang") === "ru"; } catch (e) {}
+
+  function norm(t) { return t.replace(/\s+/g, " ").trim(); }
+  function findRu(t) {
+    for (var i = 0; i < RU.length; i++) {
+      var k = RU[i][0];
+      if (t === k || (k.length >= 20 && t.indexOf(k) === 0)) return RU[i][1];
+    }
+    return null;
+  }
+  function T(en, ru) { return langOn ? en + ' <span class="ru-add">(' + ru + ')</span>' : en; }
+
+  var SEL = "nav a, h1, h2, h3, p, li, th, td, label.check, div.tag, a.btn";
+  window.__missingRu = function () {
+    var out = [], els = document.querySelectorAll(SEL);
+    for (var i = 0; i < els.length; i++) {
+      var el = els[i];
+      if (el.classList.contains("author") || el.closest("ul.sources") || el.closest("ol.steps") && el.tagName === "LI" || el.closest("#quiz-box")) continue;
+      var clone = el.cloneNode(true), sp = clone.querySelectorAll(".ru-add");
+      for (var k = 0; k < sp.length; k++) sp[k].parentNode.removeChild(sp[k]);
+      var t = norm(clone.textContent);
+      if (/[A-Za-z]{3}/.test(t) && !findRu(t)) out.push(t.slice(0, 60));
+    }
+    return out;
+  };
+  function applyLang() {
+    var old = document.querySelectorAll("main .ru-add, nav .ru-add"), i;
+    for (i = 0; i < old.length; i++) old[i].parentNode.removeChild(old[i]);
+    var btn = document.getElementById("lang-btn");
+    btn.textContent = langOn ? "EN + RU" : "EN";
+    btn.setAttribute("aria-pressed", langOn ? "true" : "false");
+    if (!langOn) return;
+    var els = document.querySelectorAll(SEL);
+    for (i = 0; i < els.length; i++) {
+      var el = els[i];
+      if (el.classList.contains("author") || el.closest("ul.sources") || el.closest("ol.steps") && el.tagName === "LI" || el.closest("#quiz-box")) continue;
+      var ru = findRu(norm(el.textContent));
+      if (ru) {
+        var sp = document.createElement("span");
+        sp.className = "ru-add";
+        sp.textContent = " (" + ru + ")";
+        el.appendChild(sp);
+      }
+    }
+  }
+
   /* ---------- Quiz ---------- */
   var questions = [
     {
       headline: "“BREAKING!!! Doctors HATE this one trick: drink this tea and lose 10 kg in 3 days!”",
+      ruHeadline: "«СРОЧНО!!! Врачи НЕНАВИДЯТ этот трюк: пейте этот чай и худейте на 10 кг за 3 дня!»",
       answer: "fake",
-      why: "Capital letters, an impossible promise and no named source or study. This is a typical clickbait ad."
+      why: "Capital letters, an impossible promise and no named source or study. This is a typical clickbait ad.",
+      ruWhy: "Заглавные буквы, невозможное обещание, нет названного источника или исследования. Типичная кликбейтная реклама."
     },
     {
       headline: "A city council publishes the date of next month’s public meeting on its official website, with a link to the full agenda.",
+      ruHeadline: "Городской совет публикует дату следующего открытого заседания на своём официальном сайте со ссылкой на полную повестку.",
       answer: "real",
-      why: "It comes from the official primary source, gives specific details and can be verified on the council’s own page."
+      why: "It comes from the official primary source, gives specific details and can be verified on the council’s own page.",
+      ruWhy: "Это официальный первоисточник, конкретные детали, можно проверить на странице самого совета."
     },
     {
       headline: "A photo of a flooded street goes viral with the caption “This is happening right now in our city!” Reverse image search shows the same photo was published four years ago in another country.",
+      ruHeadline: "Фото затопленной улицы становится вирусным с подписью «Это происходит прямо сейчас в нашем городе!» Поиск по картинке показывает, что то же фото опубликовали четыре года назад в другой стране.",
       answer: "fake",
-      why: "This is false context: a real photo with wrong information about time and place. Reverse image search exposed it."
+      why: "This is false context: a real photo with wrong information about time and place. Reverse image search exposed it.",
+      ruWhy: "Это ложный контекст: настоящее фото с неверными сведениями о времени и месте. Поиск по картинке это раскрыл."
     },
     {
       headline: "A university announces new library opening hours in an email to students and on its official website.",
+      ruHeadline: "Университет объявляет новые часы работы библиотеки в письме студентам и на официальном сайте.",
       answer: "real",
-      why: "Two official channels confirm the same message, and the information is simple and checkable."
+      why: "Two official channels confirm the same message, and the information is simple and checkable.",
+      ruWhy: "Два официальных канала подтверждают одно сообщение, информация простая и проверяемая."
     },
     {
       headline: "A website called “bbc-news-today.example” reports that a famous actor has died. No other outlet mentions it.",
+      ruHeadline: "Сайт «bbc-news-today.example» сообщает, что умер известный актёр. Ни одно другое издание об этом не пишет.",
       answer: "fake",
-      why: "The name imitates a real news brand (imposter content) and no reliable outlet confirms such a major story."
+      why: "The name imitates a real news brand (imposter content) and no reliable outlet confirms such a major story.",
+      ruWhy: "Название имитирует настоящий новостной бренд (контент-самозванец), а такое важное сообщение никто из надёжных изданий не подтверждает."
     },
     {
       headline: "A satirical news site publishes: “Local student discovers that homework does itself if you stare at it long enough.”",
+      ruHeadline: "Сатирический новостной сайт публикует: «Местный студент обнаружил, что домашнее задание делается само, если долго на него смотреть.»",
       answer: "fake",
-      why: "It is satire, a joke. It is not meant to be true, but it becomes misinformation if someone shares it as real news."
+      why: "It is satire, a joke. It is not meant to be true, but it becomes misinformation if someone shares it as real news.",
+      ruWhy: "Это сатира, шутка. Она не претендует на правду, но становится мисинформацией, если кто-то делится ею как настоящей новостью."
     },
     {
       headline: "A national weather service warns of heavy snow tomorrow. Several news outlets repeat the warning and cite the same service.",
+      ruHeadline: "Национальная метеослужба предупреждает о сильном снегопаде завтра. Несколько изданий повторяют предупреждение со ссылкой на ту же службу.",
       answer: "real",
-      why: "The original source is an official agency, and independent outlets confirm it by citing that source."
+      why: "The original source is an official agency, and independent outlets confirm it by citing that source.",
+      ruWhy: "Первоисточник — официальное агентство, а независимые издания подтверждают его, ссылаясь на него."
     },
     {
       headline: "A screenshot of a “message from a minister” announces that all exams are cancelled. There is no link and no date.",
+      ruHeadline: "Скриншот «сообщения министра» объявляет, что все экзамены отменены. Нет ни ссылки, ни даты.",
       answer: "fake",
-      why: "A screenshot with no link, date or confirmation is easy to fake. Always look for the original statement."
+      why: "A screenshot with no link, date or confirmation is easy to fake. Always look for the original statement.",
+      ruWhy: "Скриншот без ссылки, даты и подтверждения легко подделать. Всегда ищите оригинальное заявление."
     }
   ];
 
   var box = document.getElementById("quiz-box");
-  var index = 0, score = 0, answered = false;
+  var index = 0, score = 0, answered = false, lastChoice = null;
 
   function render() {
     if (index >= questions.length) { return renderEnd(); }
     var q = questions[index];
-    answered = false;
     box.innerHTML =
-      '<div class="q-meta">Question ' + (index + 1) + ' of ' + questions.length + '</div>' +
+      '<div class="q-meta">' + T("Question " + (index + 1) + " of " + questions.length, "Вопрос " + (index + 1) + " из " + questions.length) + '</div>' +
       '<div class="progress"><div style="width:' + (index / questions.length * 100) + '%"></div></div>' +
-      '<p class="q-text">Would you trust this?</p>' +
-      '<div class="headline">' + q.headline + '</div>' +
+      '<p class="q-text">' + T("Would you trust this?", "Вы бы этому поверили?") + '</p>' +
+      '<div class="headline">' + T(q.headline, q.ruHeadline) + '</div>' +
       '<div class="options">' +
-        '<button class="btn secondary" data-a="real">Looks real</button>' +
-        '<button class="btn secondary" data-a="fake">Looks fake or misleading</button>' +
+        '<button class="btn secondary" data-a="real">' + T("Looks real", "Похоже на правду") + '</button>' +
+        '<button class="btn secondary" data-a="fake">' + T("Looks fake or misleading", "Похоже на фейк или обман") + '</button>' +
       '</div>' +
       '<div class="feedback" id="fb"></div>' +
       '<div style="margin-top:16px"><button class="btn" id="next" style="display:none">' +
-        (index === questions.length - 1 ? 'See result' : 'Next question') + '</button></div>';
+        (index === questions.length - 1 ? T("See result", "Результат") : T("Next question", "Следующий вопрос")) + '</button></div>';
 
     var btns = box.querySelectorAll("[data-a]");
     for (var i = 0; i < btns.length; i++) {
-      btns[i].addEventListener("click", onAnswer);
+      btns[i].addEventListener("click", function (e) { onAnswer(e.currentTarget.getAttribute("data-a")); });
     }
-    document.getElementById("next").addEventListener("click", function () { index++; render(); });
+    document.getElementById("next").addEventListener("click", function () { index++; answered = false; lastChoice = null; render(); });
+    if (answered) showFeedback(lastChoice);
   }
 
-  function onAnswer(e) {
+  function onAnswer(choice) {
     if (answered) return;
     answered = true;
+    lastChoice = choice;
+    if (choice === questions[index].answer) score++;
+    showFeedback(choice);
+  }
+
+  function showFeedback(choice) {
     var q = questions[index];
-    var choice = e.currentTarget.getAttribute("data-a");
     var ok = choice === q.answer;
-    if (ok) score++;
     var fb = document.getElementById("fb");
     fb.className = "feedback " + (ok ? "ok" : "no");
     fb.style.display = "block";
-    fb.innerHTML = '<strong class="' + (ok ? "ok" : "no") + '">' + (ok ? "Correct." : "Not quite.") + '</strong> ' +
-      'Answer: ' + (q.answer === "real" ? "reliable." : "fake or misleading.") + ' ' + q.why;
+    fb.innerHTML = '<strong class="' + (ok ? "ok" : "no") + '">' + (ok ? T("Correct.", "Верно.") : T("Not quite.", "Не совсем.")) + '</strong> ' +
+      (q.answer === "real" ? T("Answer: reliable.", "Ответ: достоверно.") : T("Answer: fake or misleading.", "Ответ: фейк или вводит в заблуждение.")) + ' ' +
+      T(q.why, q.ruWhy);
     var all = box.querySelectorAll("[data-a]");
     for (var i = 0; i < all.length; i++) { all[i].disabled = true; }
     document.getElementById("next").style.display = "inline-block";
@@ -472,20 +682,18 @@
 
   function renderEnd() {
     var msg;
-    if (score >= 7) msg = "Excellent. You already think like a fact-checker.";
-    else if (score >= 5) msg = "Good result. Review the red flags and the 5 steps to improve it.";
-    else msg = "Do not worry. Read the 5 steps again and try once more.";
+    if (score >= 7) msg = T("Excellent. You already think like a fact-checker.", "Отлично. Вы уже мыслите как проверяющий факты.");
+    else if (score >= 5) msg = T("Good result. Review the red flags and the 5 steps to improve it.", "Хороший результат. Повторите красные флаги и 5 шагов, чтобы улучшить его.");
+    else msg = T("Do not worry. Read the 5 steps again and try once more.", "Не переживайте. Перечитайте 5 шагов и попробуйте ещё раз.");
     box.innerHTML =
       '<div class="progress"><div style="width:100%"></div></div>' +
       '<p class="score">' + score + ' / ' + questions.length + '</p>' +
       '<p>' + msg + '</p>' +
-      '<button class="btn" id="again">Try again</button>';
+      '<button class="btn" id="again">' + T("Try again", "Попробовать снова") + '</button>';
     document.getElementById("again").addEventListener("click", function () {
-      index = 0; score = 0; render();
+      index = 0; score = 0; answered = false; lastChoice = null; render();
     });
   }
-
-  render();
 
   /* ---------- Checklist ---------- */
   var checks = document.querySelectorAll("#checklist input[type=checkbox]");
@@ -493,11 +701,22 @@
   function updateChecks() {
     var n = 0;
     for (var i = 0; i < checks.length; i++) { if (checks[i].checked) n++; }
-    result.textContent = n + " of " + checks.length + " steps done." +
-      (n === checks.length ? " Great, now it is safe to share." : "");
+    var done = n === checks.length;
+    result.innerHTML = T(n + " of " + checks.length + " steps done.", "Выполнено " + n + " из " + checks.length + " шагов.") +
+      (done ? " " + T("Great, now it is safe to share.", "Отлично, теперь можно делиться.") : "");
   }
-  for (var i = 0; i < checks.length; i++) { checks[i].addEventListener("change", updateChecks); }
+  for (var c = 0; c < checks.length; c++) { checks[c].addEventListener("change", updateChecks); }
+
+  /* ---------- Toggle ---------- */
+  function refreshAll() { applyLang(); render(); updateChecks(); }
+  document.getElementById("lang-btn").addEventListener("click", function () {
+    langOn = !langOn;
+    try { localStorage.setItem("lang", langOn ? "ru" : "en"); } catch (e) {}
+    refreshAll();
+  });
+  refreshAll();
 })();
+
 </script>
 </body>
 </html>
